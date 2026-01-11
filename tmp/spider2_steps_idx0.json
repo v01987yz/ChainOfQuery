@@ -1,0 +1,60 @@
+{
+  "question": "How many pseudo users were active in the last 7 days but inactive in the last 2 days as of January 7, 2021?",
+  "steps": [
+    {
+      "step_id": 1,
+      "goal": "Identify active users in the last 7 days.",
+      "tables_or_entities": [
+        "events_20210101",
+        "events_20210102",
+        "events_20210103",
+        "events_20210104",
+        "events_20210105",
+        "events_20210106",
+        "events_20210107"
+      ],
+      "filters_or_conditions": [
+        "event_date BETWEEN '20210101' AND '20210107'"
+      ],
+      "intermediate_output": "List of unique user IDs who triggered events in the last 7 days.",
+      "depends_on_step_ids": []
+    },
+    {
+      "step_id": 2,
+      "goal": "Identify active users in the last 2 days.",
+      "tables_or_entities": [
+        "events_20210106",
+        "events_20210107"
+      ],
+      "filters_or_conditions": [
+        "event_date BETWEEN '20210106' AND '20210107'"
+      ],
+      "intermediate_output": "List of unique user IDs who triggered events in the last 2 days.",
+      "depends_on_step_ids": []
+    },
+    {
+      "step_id": 3,
+      "goal": "Determine pseudo users who were active in the last 7 days but not in the last 2 days.",
+      "tables_or_entities": [],
+      "filters_or_conditions": [
+        "active_users_last_7_days.user_id NOT IN active_users_last_2_days.user_id"
+      ],
+      "intermediate_output": "List of unique user IDs who were active in the last 7 days but inactive in the last 2 days.",
+      "depends_on_step_ids": [
+        1,
+        2
+      ]
+    },
+    {
+      "step_id": 4,
+      "goal": "Count the number of pseudo users identified in the previous step.",
+      "tables_or_entities": [],
+      "filters_or_conditions": [],
+      "intermediate_output": "Count of unique user IDs from the previous step.",
+      "depends_on_step_ids": [
+        3
+      ]
+    }
+  ],
+  "final_answer_derivation": "The final answer is obtained by taking the count of unique user IDs from step 4."
+}
