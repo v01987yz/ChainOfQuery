@@ -1,0 +1,101 @@
+[
+    {
+        "instance_id": "demo_001",
+        "question": "What is the revenue of the company that acquired Youtube?",
+        "status": "success",
+        "duration_sec": 6.65,
+        "steps_plan": [
+            {
+                "step_id": 1,
+                "description": "Identify the buyer_id of the company that acquired Youtube by searching the acquisitions table for the target_name 'Youtube'.",
+                "dependency": "None"
+            },
+            {
+                "step_id": 2,
+                "description": "Using the buyer_id obtained from Step 1, look up the corresponding revenue in the companies table.",
+                "dependency": 1
+            }
+        ],
+        "execution_trace": [
+            {
+                "step_id": 1,
+                "description": "Identify the buyer_id of the company that acquired Youtube by searching the acquisitions table for the target_name 'Youtube'.",
+                "sql": "SELECT buyer_id FROM acquisitions WHERE target_name = 'Youtube';",
+                "result": "[(1,)]"
+            },
+            {
+                "step_id": 2,
+                "description": "Using the buyer_id obtained from Step 1, look up the corresponding revenue in the companies table.",
+                "sql": "SELECT revenue FROM companies WHERE id = 1;",
+                "result": "[(280000000.0,)]"
+            }
+        ],
+        "final_answer_context": "{1: [(1,)], 2: [(280000000.0,)]}"
+    },
+    {
+        "instance_id": "demo_002",
+        "question": "Which company acquired GitHub and what is its revenue?",
+        "status": "success",
+        "duration_sec": 7.62,
+        "steps_plan": [
+            {
+                "step_id": 1,
+                "description": "Identify the buyer_id from the acquisitions table where the target_name is 'GitHub'.",
+                "dependency": "None"
+            },
+            {
+                "step_id": 2,
+                "description": "Using the buyer_id obtained from Step 1, retrieve the company name and revenue from the companies table.",
+                "dependency": 1
+            }
+        ],
+        "execution_trace": [
+            {
+                "step_id": 1,
+                "description": "Identify the buyer_id from the acquisitions table where the target_name is 'GitHub'.",
+                "sql": "SELECT buyer_id FROM acquisitions WHERE target_name = 'GitHub';",
+                "result": "[(2,)]"
+            },
+            {
+                "step_id": 2,
+                "description": "Using the buyer_id obtained from Step 1, retrieve the company name and revenue from the companies table.",
+                "sql": "SELECT name, revenue FROM companies WHERE id = 2;",
+                "result": "[('Microsoft', 198000000.0)]"
+            }
+        ],
+        "final_answer_context": "{1: [(2,)], 2: [('Microsoft', 198000000.0)]}"
+    },
+    {
+        "instance_id": "demo_003",
+        "question": "Find the name of the company that acquired a target in the year 2006.",
+        "status": "success",
+        "duration_sec": 6.65,
+        "steps_plan": [
+            {
+                "step_id": 1,
+                "description": "Identify the buyer_id(s) from the acquisitions table for acquisitions that occurred in the year 2006.",
+                "dependency": "None"
+            },
+            {
+                "step_id": 2,
+                "description": "Use the buyer_id(s) from Step 1 to retrieve the corresponding company name(s) from the companies table.",
+                "dependency": 1
+            }
+        ],
+        "execution_trace": [
+            {
+                "step_id": 1,
+                "description": "Identify the buyer_id(s) from the acquisitions table for acquisitions that occurred in the year 2006.",
+                "sql": "SELECT buyer_id FROM acquisitions WHERE year = 2006;",
+                "result": "[(1,)]"
+            },
+            {
+                "step_id": 2,
+                "description": "Use the buyer_id(s) from Step 1 to retrieve the corresponding company name(s) from the companies table.",
+                "sql": "SELECT name FROM companies WHERE id = 1;",
+                "result": "[('Google',)]"
+            }
+        ],
+        "final_answer_context": "{1: [(1,)], 2: [('Google',)]}"
+    }
+]
