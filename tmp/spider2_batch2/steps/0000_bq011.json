@@ -1,0 +1,67 @@
+{
+  "question": "How many pseudo users were active in the last 7 days but inactive in the last 2 days as of January 7, 2021?",
+  "steps": [
+    {
+      "step_id": 1,
+      "goal": "Identify users who were active in the last 7 days.",
+      "tables_or_entities": [
+        "events_20210101",
+        "events_20210102",
+        "events_20210103",
+        "events_20210104",
+        "events_20210105",
+        "events_20210106",
+        "events_20210107"
+      ],
+      "filters_or_conditions": [
+        "event_date BETWEEN '20210101' AND '20210107'",
+        "event_name = 'pseudo_user_activity'"
+      ],
+      "intermediate_output": "List of active users for the days 20210101 to 20210107.",
+      "depends_on_step_ids": []
+    },
+    {
+      "step_id": 2,
+      "goal": "Identify users who were active in the last 2 days.",
+      "tables_or_entities": [
+        "events_20210106",
+        "events_20210107"
+      ],
+      "filters_or_conditions": [
+        "event_date IN ('20210106', '20210107')",
+        "event_name = 'pseudo_user_activity'"
+      ],
+      "intermediate_output": "List of active users for the days 20210106 and 20210107.",
+      "depends_on_step_ids": []
+    },
+    {
+      "step_id": 3,
+      "goal": "Determine active users from step 1 who are not in step 2.",
+      "tables_or_entities": [
+        "Active users from step 1",
+        "Active users from step 2"
+      ],
+      "filters_or_conditions": [
+        "Active users from step 1 NOT IN Active users from step 2"
+      ],
+      "intermediate_output": "List of users active in the last 7 days but inactive in the last 2 days.",
+      "depends_on_step_ids": [
+        1,
+        2
+      ]
+    },
+    {
+      "step_id": 4,
+      "goal": "Count the users identified in step 3.",
+      "tables_or_entities": [
+        "Users from step 3"
+      ],
+      "filters_or_conditions": [],
+      "intermediate_output": "Count of users active in the last 7 days but inactive in the last 2 days.",
+      "depends_on_step_ids": [
+        3
+      ]
+    }
+  ],
+  "final_answer_derivation": "The final count from step 4 gives the number of pseudo users who were active in the last 7 days but inactive in the last 2 days as of January 7, 2021."
+}

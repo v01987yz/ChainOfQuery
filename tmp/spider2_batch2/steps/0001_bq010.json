@@ -1,0 +1,116 @@
+{
+  "question": "Find the top-selling product among customers who bought 'Youtube Men’s Vintage Henley' in July 2017, excluding itself.",
+  "steps": [
+    {
+      "step_id": 1,
+      "goal": "Identify customers who purchased 'Youtube Men’s Vintage Henley' in July 2017.",
+      "tables_or_entities": [
+        "ga_sessions_20170701",
+        "ga_sessions_20170702",
+        "ga_sessions_20170703",
+        "ga_sessions_20170704",
+        "ga_sessions_20170705",
+        "ga_sessions_20170706",
+        "ga_sessions_20170707",
+        "ga_sessions_20170708",
+        "ga_sessions_20170709",
+        "ga_sessions_20170710",
+        "ga_sessions_20170711",
+        "ga_sessions_20170712",
+        "ga_sessions_20170713",
+        "ga_sessions_20170714",
+        "ga_sessions_20170715",
+        "ga_sessions_20170716",
+        "ga_sessions_20170717",
+        "ga_sessions_20170718",
+        "ga_sessions_20170719",
+        "ga_sessions_20170720",
+        "ga_sessions_20170721",
+        "ga_sessions_20170722",
+        "ga_sessions_20170723",
+        "ga_sessions_20170724",
+        "ga_sessions_20170725",
+        "ga_sessions_20170726",
+        "ga_sessions_20170727",
+        "ga_sessions_20170728",
+        "ga_sessions_20170729",
+        "ga_sessions_20170730",
+        "ga_sessions_20170731"
+      ],
+      "filters_or_conditions": [
+        "totals.product = 'Youtube Men’s Vintage Henley'",
+        "date BETWEEN '20170701' AND '20170731'"
+      ],
+      "intermediate_output": "List of customers who bought 'Youtube Men’s Vintage Henley' in July 2017.",
+      "depends_on_step_ids": []
+    },
+    {
+      "step_id": 2,
+      "goal": "Find all products purchased by the identified customers in July 2017.",
+      "tables_or_entities": [
+        "ga_sessions_20170701",
+        "ga_sessions_20170702",
+        "ga_sessions_20170703",
+        "ga_sessions_20170704",
+        "ga_sessions_20170705",
+        "ga_sessions_20170706",
+        "ga_sessions_20170707",
+        "ga_sessions_20170708",
+        "ga_sessions_20170709",
+        "ga_sessions_20170710",
+        "ga_sessions_20170711",
+        "ga_sessions_20170712",
+        "ga_sessions_20170713",
+        "ga_sessions_20170714",
+        "ga_sessions_20170715",
+        "ga_sessions_20170716",
+        "ga_sessions_20170717",
+        "ga_sessions_20170718",
+        "ga_sessions_20170719",
+        "ga_sessions_20170720",
+        "ga_sessions_20170721",
+        "ga_sessions_20170722",
+        "ga_sessions_20170723",
+        "ga_sessions_20170724",
+        "ga_sessions_20170725",
+        "ga_sessions_20170726",
+        "ga_sessions_20170727",
+        "ga_sessions_20170728",
+        "ga_sessions_20170729",
+        "ga_sessions_20170730",
+        "ga_sessions_20170731"
+      ],
+      "filters_or_conditions": [
+        "customer_id IN (output from step 1)",
+        "date BETWEEN '20170701' AND '20170731'"
+      ],
+      "intermediate_output": "List of products purchased by customers identified in step 1.",
+      "depends_on_step_ids": [
+        1
+      ]
+    },
+    {
+      "step_id": 3,
+      "goal": "Count occurrences of each product purchased, excluding 'Youtube Men’s Vintage Henley'.",
+      "tables_or_entities": [],
+      "filters_or_conditions": [
+        "product != 'Youtube Men’s Vintage Henley'"
+      ],
+      "intermediate_output": "Product counts excluding 'Youtube Men’s Vintage Henley'.",
+      "depends_on_step_ids": [
+        2
+      ]
+    },
+    {
+      "step_id": 4,
+      "goal": "Identify the top-selling product from the counted list.",
+      "tables_or_entities": [],
+      "filters_or_conditions": [],
+      "intermediate_output": "Top-selling product among the counted products.",
+      "depends_on_step_ids": [
+        3
+      ]
+    }
+  ],
+  "final_answer_derivation": "The top-selling product identified in step 4 is the final answer."
+}
