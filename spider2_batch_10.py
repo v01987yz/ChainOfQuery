@@ -301,7 +301,12 @@ def main():
     summary_path = out_dir / "summary.csv"
 
     print(f"[INFO] Loading dataset xlangai/spider2-lite ...")
-    ds = load_dataset("xlangai/spider2-lite", split=args.split)
+    data_jsonl = os.path.join(args.spider2_root, "spider2-lite", "spider2-lite.jsonl")
+    if os.path.exists(data_jsonl):
+        ds = load_dataset("json", data_files=data_jsonl, split="train")
+    else:
+        ds = load_dataset("xlangai/spider2-lite", split="train")
+
     total = len(ds)
     print(f"[INFO] Split={args.split}, total={total}, start_idx={args.start_idx}, n={args.n}")
 
